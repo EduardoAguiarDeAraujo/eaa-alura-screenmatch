@@ -89,6 +89,18 @@ public class Principal {
             System.out.println("Episódio não encontrado.");
         }
 
+        Map<Integer, Double> avaliacaoPorTemporada = episodios.stream()
+                .filter(e -> e.getAvaliacao() != null && !e.getAvaliacao().toString().equalsIgnoreCase("N/A") && e.getAvaliacao() > 0.0)
+                .collect(Collectors.groupingBy(Episodio::getTemporada,
+                        Collectors.averagingDouble(Episodio::getAvaliacao)));
+        System.out.println(avaliacaoPorTemporada);
+
+        DoubleSummaryStatistics estatisticas = episodios.stream()
+                .filter(e -> e.getAvaliacao() != null && !e.getAvaliacao().toString().equalsIgnoreCase("N/A") && e.getAvaliacao() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodio::getAvaliacao));
+        System.out.println(estatisticas);
+
+
 //        System.out.println("A partir de que ano você deseja ver os episódios?");
 //        var ano = leitura.nextInt();
 //        leitura.nextLine();
